@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Diagnostics;
 using System.Security.Cryptography.X509Certificates;
 using System.Collections.Generic;
@@ -6,11 +6,11 @@ using System.Runtime.CompilerServices;
 
 public class cardHolder
 {
-    public string firstname;
-    public string lastname;
-    public int pin;
-    public double cardnumber;
-    public double balance;
+    string firstname;
+    string lastname;
+    int pin;
+    double cardnumber;
+    double balance;
     public cardHolder(double cardnumber, string firstname, string lastname, int pin, double balance)  //constructor
     {
         this.firstname = firstname;
@@ -20,24 +20,35 @@ public class cardHolder
         this.balance = balance;
     }
 
-    public string Firstname() { return firstname; }
-    public string Lastname() { return lastname; }
-    public double getCardnumber() { return cardnumber; }
-    public double getBalance() { return balance; }
-    public int getPin() { return pin; }
 
-    public void setFirstname(string firstname) { this.firstname = firstname; }
+    public string Firstname     
+    {   set { this.firstname = value; }
+        get { return firstname;  }
+    }
 
-    public void setLastname(string lastname) { this.lastname = lastname; }
+    public string Lastname 
+    { 
+        set { this.lastname = value; }
+        get { return lastname; }
+    }
 
-    public void setCardnumber(double cardnumber) { this.cardnumber = cardnumber; }
+    public double Cardnumber
+    {
+        set { this.cardnumber = value; }
+        get { return this.cardnumber; }
+    }
 
-    public void setBalance(double balance) { this.balance = balance; }
+    public double Balance
+    { 
+        set { this.balance = value; }
+        get { return this.balance; }
+    }
 
-    public void setPin(int pin) { this.pin = pin; }
-
-
-
+    public int PIN
+    {
+        set { this.pin = value; }
+        get { return this.pin; }
+    }
 
     
 }
@@ -59,8 +70,8 @@ internal class program
         {
             Console.WriteLine("How much you want to deposit");
             double deposit = double.Parse(Console.ReadLine());
-            cardHolder.setBalance(deposit + cardHolder.getBalance());
-            Console.WriteLine($"Your current balance is {cardHolder.getBalance()}");
+            cardHolder.Balance += deposit;
+            Console.WriteLine($"Your current balance is {cardHolder.Balance}");
         
         }
 
@@ -69,26 +80,27 @@ internal class program
             Console.WriteLine("How much money you want to withdraw");
             double withdraw = double.Parse(Console.ReadLine());
 
-            if(withdraw > cardHolder.getBalance())
+            if(withdraw > cardHolder.Balance)
             {
                 Console.WriteLine("Not enough balance");
             }
             else
             {
-                cardHolder.setBalance(cardHolder.getBalance() - withdraw);
-                Console.WriteLine($"Your current balance is {cardHolder.getBalance()}");
+                //cardHolder.setBalance(cardHolder.getBalance() - withdraw);
+                cardHolder.Balance -= withdraw;
+                Console.WriteLine($"Your current balance is {cardHolder.Balance}");
             }
         }
 
         void balance(cardHolder cardHolder)
         {
-            Console.WriteLine($"Your current balance is {cardHolder.getBalance()}");
+            Console.WriteLine($"Your current balance is {cardHolder.Balance}");
         }
 
        
 
         List<cardHolder> cardHolders = new List<cardHolder>();
-        cardHolders.Add(new cardHolder(123450, "Somen", "Das", 1234, 145.66));  // list of objects (first name, last name, PIN, Card number, balance)
+        cardHolders.Add(new cardHolder(123450, "Somen", "Das", 1234, 145.66));  // list of objects (card number, first name, last name, PIN, account balance)
         cardHolders.Add(new cardHolder(123451, "Surbhi", "Das", 1999, 45.66));
         cardHolders.Add(new cardHolder(123452, "Arti", "Das", 1983, 100.86));
 
@@ -104,7 +116,7 @@ internal class program
             try
             {
                 debitcardNumber = double.Parse(Console.ReadLine());
-                currentuser = cardHolders.FirstOrDefault(a => a.cardnumber == debitcardNumber);
+                currentuser = cardHolders.FirstOrDefault(a => a.Cardnumber == debitcardNumber);
 
                 if(currentuser != null) { break; }
                 else { Console.WriteLine("Card is not recognized enter again"); }
@@ -123,14 +135,14 @@ internal class program
             {
                 userPin = int.Parse(Console.ReadLine());
 
-                if (currentuser.getPin() == userPin) { break; }
+                if (currentuser.PIN == userPin) { break; }
                 else { Console.WriteLine("Incorrect PIN"); }
             }
             catch { Console.WriteLine("Incorrect PIN"); }
 
         }
 
-        Console.WriteLine($"\nHello {currentuser.firstname} {currentuser.lastname}");
+        Console.WriteLine($"\nHello {currentuser.Firstname} {currentuser.Lastname}");
 
         int options = 0;
 
